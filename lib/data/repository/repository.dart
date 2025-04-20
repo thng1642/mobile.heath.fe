@@ -13,19 +13,19 @@ class DefaultRepository implements Repository {
   Future<List<Song>?> loadData() async {
     List<Song> songs = [];
     await _remoteDataSource.loadData().then(
-      (remoteSongs) => {
-        if (remoteSongs != null)
-          {songs.addAll(remoteSongs)}
-        else
-          {
-            _localDataSource.loadData().then(
-              (localSongs) => {
-                if (localSongs != null) {songs.addAll(localSongs)},
+          (remoteSongs) => {
+            if (remoteSongs != null)
+              {songs.addAll(remoteSongs)}
+            else
+              {
+                _localDataSource.loadData().then(
+                      (localSongs) => {
+                        if (localSongs != null) {songs.addAll(localSongs)},
+                      },
+                    ),
               },
-            ),
           },
-      },
-    );
+        );
     return songs;
   }
 }
