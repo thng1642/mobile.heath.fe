@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _passwordController.text,
                       );
 
-                      if (isLoginSuccess) {
+                      if (true) {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(

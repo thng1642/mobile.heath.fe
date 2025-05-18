@@ -4,7 +4,7 @@ import '../widgets/common_header.dart';
 import 'exercise_types_screen.dart';
 
 class HealthTrackingScreen extends StatelessWidget {
-  const HealthTrackingScreen({Key? key}) : super(key: key);
+  const HealthTrackingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
