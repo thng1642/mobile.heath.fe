@@ -19,31 +19,14 @@ class _MainScreenState extends State<MainScreen> {
     printer: PrettyPrinter(), // Use the PrettyPrinter to format and print log
     output: null, // Use the default LogOutput (-> send everything to console)
   );
-  final SocketService _socketService = SocketService();
 
   @override
   void initState() {
     super.initState();
-    logger.d('Initializing socket...');
-    _initializeSocket();
-  }
-
-  void _initializeSocket() {
-    _socketService.connect();
-
-    _socketService.on('connection', (data) {
-      logger.d('Received connection update: $data');
-    });
-
-    _socketService.on('exerciseUpdate', (data) {
-      logger.d('Received exercise update: $data');
-    });
-    _socketService.emit("connection", "text");
   }
 
   @override
   void dispose() {
-    _socketService.disconnect();
     super.dispose();
   }
 

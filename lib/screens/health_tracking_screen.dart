@@ -1,10 +1,63 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import '../widgets/common_header.dart';
 import 'exercise_types_screen.dart';
+import 'package:healthycare/services/socket_service.dart';
+import 'package:logger/logger.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class HealthTrackingScreen extends StatelessWidget {
-  const HealthTrackingScreen({super.key});
+class HealthTrackingScreen extends StatefulWidget {
+  const HealthTrackingScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HealthTrackingScreen> createState() => _HealthTrackingScreenState();
+}
+
+class _HealthTrackingScreenState extends State<HealthTrackingScreen> {
+  final SocketService _socketService = SocketService();
+  int _heartRate = 70;
+  Timer? _timer;
+  final logger = Logger(
+    printer: PrettyPrinter(),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeSocket();
+    _startSimulatingHeartRate();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _socketService.disconnect();
+  }
+
+  void _initializeSocket() {
+    _socketService.connect();
+
+    // Listen for real-time updates
+    _socketService.on('connection', (data) {
+      // Handle health data updates
+      print('Received health update: $data');
+      // You can update the UI here based on the received data
+    });
+  }
+
+  void _startSimulatingHeartRate() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      // Simulate heart rate changes (you can make this more sophisticated)
+      final random = Random();
+      final change = random.nextInt(5) - 2; // Random change between -2 and 2
+      _heartRate = (_heartRate + change)
+          .clamp(40, 180); // Keep within a reasonable range
+      _socketService.emit("event", _heartRate);
+      print('Heart rate: $_heartRate bpm');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,24 +169,24 @@ class HealthTrackingScreen extends StatelessWidget {
           ),
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: Colors.black,
-      //   type: BottomNavigationBarType.fixed,
-      //   selectedItemColor: Colors.white,
-      //   unselectedItemColor: Colors.grey,
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.favorite),
-      //       label: 'Màn hình chờ',
-      //     ),
-      //     BottomNavigationBarItem(icon: Icon(Icons.flag), label: 'Together'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.sports), label: 'Thể dục'),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: 'Trang của bạn',
-      //     ),
-      //   ],
-      // ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Màn hình chờ',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.flag), label: 'Together'),
+          BottomNavigationBarItem(icon: Icon(Icons.sports), label: 'Thể dục'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Trang của bạn',
+          ),
+        ],
+      ),
     );
   }
 

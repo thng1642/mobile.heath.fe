@@ -109,11 +109,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () async {
                       // Handle login
                       // Call login api
-                      final authRepository = AuthRepository();
-                      final isLoginSuccess = await authRepository.login(
-                        _emailController.text,
-                        _passwordController.text,
-                      );
+                      // final authRepository = AuthRepository();
+                      // final isLoginSuccess = await authRepository.login(
+                      //   _emailController.text,
+                      //   _passwordController.text,
+                      // );
 
                       if (true) {
                         Navigator.pushReplacement(
