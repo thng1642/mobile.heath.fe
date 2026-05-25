@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/common_header.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   Widget _buildSummaryRow(String label, String value) {
     return Padding(

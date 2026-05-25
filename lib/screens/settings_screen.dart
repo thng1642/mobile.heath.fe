@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/common_header.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   Widget _buildSectionHeader(String title) {
     return Padding(
@@ -66,7 +66,7 @@ class SettingsScreen extends StatelessWidget {
                 Switch(
                   value: toggleValue,
                   onChanged: (value) {},
-                  activeColor: Colors.green[700],
+                  activeThumbColor: Colors.green[700],
                 )
               else if (rightText != null)
                 Text(

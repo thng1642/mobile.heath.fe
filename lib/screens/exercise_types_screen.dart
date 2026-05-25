@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/common_header.dart';
 
 class ExerciseTypesScreen extends StatelessWidget {
-  const ExerciseTypesScreen({Key? key}) : super(key: key);
+  const ExerciseTypesScreen({super.key});
 
   Widget _buildExerciseSection(String title, List<ExerciseItem> items) {
     return Column(

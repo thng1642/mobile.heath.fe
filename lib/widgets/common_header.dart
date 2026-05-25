@@ -7,11 +7,11 @@ class CommonHeader extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
 
   const CommonHeader({
-    Key? key,
+    super.key,
     required this.title,
     this.additionalActions,
     this.showBackButton = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -6,10 +6,10 @@ import '../widgets/common_header.dart';
 import 'exercise_types_screen.dart';
 import 'package:healthycare/services/socket_service.dart';
 import 'package:logger/logger.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+
 
 class HealthTrackingScreen extends StatefulWidget {
-  const HealthTrackingScreen({Key? key}) : super(key: key);
+  const HealthTrackingScreen({super.key});
 
   @override
   State<HealthTrackingScreen> createState() => _HealthTrackingScreenState();
@@ -18,7 +18,7 @@ class HealthTrackingScreen extends StatefulWidget {
 class _HealthTrackingScreenState extends State<HealthTrackingScreen> {
   final SocketService _socketService = SocketService();
   int _heartRate = 70;
-  Timer? _timer;
+
   final logger = Logger(
     printer: PrettyPrinter(),
   );
@@ -42,20 +42,20 @@ class _HealthTrackingScreenState extends State<HealthTrackingScreen> {
     // Listen for real-time updates
     _socketService.on('connection', (data) {
       // Handle health data updates
-      print('Received health update: $data');
+      debugPrint('Received health update: $data');
       // You can update the UI here based on the received data
     });
   }
 
   void _startSimulatingHeartRate() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(Duration(seconds: 1), (timer) {
       // Simulate heart rate changes (you can make this more sophisticated)
       final random = Random();
       final change = random.nextInt(5) - 2; // Random change between -2 and 2
       _heartRate = (_heartRate + change)
           .clamp(40, 180); // Keep within a reasonable range
       _socketService.emit("event", _heartRate);
-      print('Heart rate: $_heartRate bpm');
+      debugPrint('Heart rate: $_heartRate bpm');
     });
   }
 

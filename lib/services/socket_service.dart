@@ -1,8 +1,9 @@
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:flutter/foundation.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class SocketService {
   static final SocketService _instance = SocketService._internal();
-  late IO.Socket socket;
+  late io.Socket socket;
 
   factory SocketService() {
     return _instance;
@@ -13,7 +14,7 @@ class SocketService {
   }
 
   void _initSocket() {
-    socket = IO.io('http://localhost:5050', <String, dynamic>{
+    socket = io.io('http://localhost:5050', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
       'reconnection': true,
@@ -22,19 +23,19 @@ class SocketService {
     });
 
     socket.onConnect((_) {
-      print('Socket connected');
+      debugPrint('Socket connected');
     });
 
     socket.onDisconnect((_) {
-      print('Socket disconnected');
+      debugPrint('Socket disconnected');
     });
 
     socket.onError((error) {
-      print('Socket error: $error');
+      debugPrint('Socket error: $error');
     });
 
     socket.onConnectError((error) {
-      print('Socket connection error: $error');
+      debugPrint('Socket connection error: $error');
     });
   }
 
@@ -52,7 +53,7 @@ class SocketService {
 
   void emit(String event, dynamic data) {
     if (socket.connected) {
-      print(data);
+      debugPrint(data);
       socket.emit(event, data);
     }
   }

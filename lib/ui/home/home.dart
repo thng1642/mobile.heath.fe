@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:healthycare/ui/discovery/discovery.dart';
 import 'package:healthycare/ui/settings/settings.dart';
 import 'package:healthycare/ui/user/user.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:healthycare/l10n/app_localizations.dart';
 
 class MusicApp extends StatelessWidget {
   const MusicApp({super.key});

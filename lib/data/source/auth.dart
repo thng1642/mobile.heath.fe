@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -23,7 +24,7 @@ class RemoteAuthSource implements DataAuthSource {
 
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
-      print(jsonData);
+      debugPrint(jsonData);
       return true;
     }
     return false;
